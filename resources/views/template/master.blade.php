@@ -132,7 +132,7 @@
             </div>
             <!-- page title area end -->
             <div class="main-content-inner">
-
+                @yield('content')
 
             </div>
         </div>

@@ -1,1 +1,4 @@
-@include('template.master')
+@extends('template.master')
+@section('content')
+
+@endsection
