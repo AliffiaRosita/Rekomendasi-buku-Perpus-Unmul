@@ -13,8 +13,16 @@ class CreateSimilaritiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('similarities', function (Blueprint $table) {
+        Schema::create('similarity', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('buku_id1');
+            $table->unsignedBigInteger('buku_id2');
+            $table->unsignedBigInteger('pengunjung_id');
+            $table->double('nilai_cosine');
+            $table->foreign('buku_id1')->references('id')->on('buku')->onDelete('cascade');
+            $table->foreign('buku_id2')->references('id')->on('buku')->onDelete('cascade');
+            $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

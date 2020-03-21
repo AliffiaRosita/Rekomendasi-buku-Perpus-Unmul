@@ -13,8 +13,13 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('buku', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->text('judul');
+            $table->longText('deskripsi')->nullable();
+            $table->string('foto')->nullable();
+            $table->string('penerbit');
+            $table->string('isbn');
             $table->timestamps();
         });
     }

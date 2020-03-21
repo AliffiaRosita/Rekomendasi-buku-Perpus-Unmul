@@ -13,9 +13,15 @@ class CreateRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('rating', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('buku_id')->unsigned();
+            $table->bigInteger('pengunjung_id')->unsigned();
+            $table->bigInteger('nilai');
+            $table->string('ulasan')->nullable();
             $table->timestamps();
+            $table->foreign('buku_id')->references('id')->on('buku')->onDelete('cascade');
+            $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
         });
     }
 

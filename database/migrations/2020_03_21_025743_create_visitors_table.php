@@ -13,8 +13,15 @@ class CreateVisitorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('visitors', function (Blueprint $table) {
+        Schema::create('pengunjung', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nama_pengunjung');
+            $table->integer('nim');
+            $table->text('fakultas');
+            $table->integer('angkatan');
+            $table->string('foto_profil')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
