@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecommedsTable extends Migration
+class CreateRecommendsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRecommedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recommeds', function (Blueprint $table) {
+        Schema::create('recommends', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateRecommedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recommeds');
+        Schema::dropIfExists('recommends');
     }
 }
