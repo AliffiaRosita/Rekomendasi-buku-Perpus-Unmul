@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>srtdash - ICO Dashboard</title>
+    <title>Admin Perpustakaan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{asset('assets/images/icon/favicon.ico')}}">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
@@ -39,7 +39,7 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/images/icon/logo.png" alt="logo"></a>
+                <a href="{{url('/')}}" style="min-width:0px"><h5 class="text-white text-left text-bold">Rekomendasi Buku</h5></a>
                 </div>
             </div>
             <div class="main-menu">
@@ -47,19 +47,14 @@
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li class="active">
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
-                                <ul class="collapse">
-                                    <li class="active"><a href="index.html">ICO dashboard</a></li>
-                                    <li><a href="index2.html">Ecommerce dashboard</a></li>
-                                    <li><a href="index3.html">SEO dashboard</a></li>
-                                </ul>
+                                <a href="{{url('/')}}" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
                             </li>
-                            <li class="active">
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
+                            <li >
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layers-alt"></i><span>Master</span></a>
                                 <ul class="collapse">
-                                    <li class="active"><a href="index.html">ICO dashboard</a></li>
-                                    <li><a href="index2.html">Ecommerce dashboard</a></li>
-                                    <li><a href="index3.html">SEO dashboard</a></li>
+                                    <li class="active"><a href="index.html">Buku</a></li>
+                                    <li><a href="index2.html">Pengunjung</a></li>
+                                    <li><a href="index3.html">Akun</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -84,15 +79,16 @@
                     <!-- profile info & task notification -->
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
-                            <li id="full-view"><i class="ti-fullscreen"></i></li>
-                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                             <li class="dropdown" style="min-width:200px">
+                                 <h5 class="text-center dropdown-toggle" data-toggle="dropdown"><img src="assets/images/author/avatar.png" width="30px" class="rounded-circle border-secondary border" height="30px" alt="">&nbsp; Aliffia Rosita</h5>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Profil</a>
+                                        <a class="dropdown-item" href="#">Log Out</a>
+                                    </div>
 
+                                {{-- <div class="dropdown-menu bell-notify-box notify-box" style="height:200px">
+                                    <span class="notify-title dropdown-toggle">Settings</span>
 
-                             <li class="dropdown">
-                                <i class="ti-settings dropdown-toggle" data-toggle="dropdown">
-                                </i>
-                                <div class="dropdown-menu bell-notify-box notify-box" style="height:200px">
-                                    <span class="notify-title">Settings</span>
                                     <div class="nofity-list" style="padding-top:0.5rem;">
                                         <a href="#" class="notify-item " style="padding-bottom:30px">
                                             <div class="notify-thumb ">
@@ -107,7 +103,7 @@
                                             LOGOUT
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </li>
 
                         </ul>
