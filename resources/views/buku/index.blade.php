@@ -21,7 +21,7 @@
 <div class="col-12 mt-5">
     <div class="card">
         <div class="card-body">
-            <h4 class="header-title d-inline">Data  Buku</h4> <a href="" class=" float-right mb-3 btn btn-sm btn-success"><i class="ti-plus"></i> Tambah Buku</a>
+        <h4 class="header-title d-inline">Data  Buku</h4> <a href="{{route('buku.create')}}" class=" float-right mb-3 btn btn-sm btn-success"><i class="ti-plus"></i> Tambah Buku</a>
             <div class="data-tables datatable-primary">
                 <table id="dataTable3" class="text-center table-hover">
                     <thead class="text-capitalize">
