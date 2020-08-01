@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Visitor;
 class VisitorController extends Controller
 {
     /**
@@ -13,7 +13,8 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        //
+        $visitors = Visitor::orderBy('nama_pengunjung','asc')->paginate(50);
+        return view('pengunjung.index', compact('visitors'));
     }
 
     /**
@@ -23,7 +24,7 @@ class VisitorController extends Controller
      */
     public function create()
     {
-        //
+        return view('pengunjung.create');
     }
 
     /**
@@ -34,7 +35,8 @@ class VisitorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+
     }
 
     /**
@@ -80,5 +82,25 @@ class VisitorController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function savePict($pengunjung)
+    {
+        if(!empty($pengunjung))
+        {
+            $new_name = rand().'.'.$pengunjung->getClientOriginalExtension();
+            $path_foto = storage_path().'/app/public/image/pengunjung/'.$new_name;
+            Image::make($pengunjung)->save($path_foto);
+
+            $name = $new_name;
+        } else {
+            $name = null;
+        }
+    return $name;
+    }
+
+    public function deleteImage($filename) {
+        $path = storage_path('app/public/image/pengunjung/');
+        // dd($path.$filename);
+        return File::delete($path.$filename);
     }
 }

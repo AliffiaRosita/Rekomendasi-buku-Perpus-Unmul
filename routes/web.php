@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('buku', 'BookController');
+Route::resource('pengunjung', 'VisitorController');

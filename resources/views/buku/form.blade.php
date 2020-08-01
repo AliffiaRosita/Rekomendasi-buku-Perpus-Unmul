@@ -42,14 +42,16 @@
             Kosongkan input bila tidak mengubah gambar
         </small>
         @endif
+        {{-- {{dd(isset($book->foto))}} --}}
         <div class="row">
             <div class="col">
             <div id='img_contain'>
-            <img id="img" src="http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png" height="200px" width="100px"
+            <img id="img" src="{{isset($book->foto)? asset("storage/image/buku/".$book->foto): "http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png"}}" height="200px" width="100px"
                     alt="your image" title='' /></div>
             <div class="input-group">
                 <div class="custom-file">
-                <input name="foto" type="file" id="inputGroupFile01" value="{{isset($book->foto)? $book->foto :null}}" onchange="readURL(this)" accept="image/*" class="imgInp custom-file-input"
+                    {{-- {{dd($book->foto)}} --}}
+                <input name="foto" type="file" id="inputGroupFile01" value="{{isset($book->foto)?$book->foto:null}}" onchange="readURL(this)" class="imgInp custom-file-input"
                         aria-describedby="inputGroupFileAddon01">
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                 </div>
@@ -62,6 +64,8 @@
 @push('js')
 <script>
     function readURL(input) {
+        // console.log(input.file);
+
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 

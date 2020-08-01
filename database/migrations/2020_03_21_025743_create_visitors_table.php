@@ -18,9 +18,9 @@ class CreateVisitorsTable extends Migration
             $table->string('nama_pengunjung');
             $table->integer('nim');
             $table->text('fakultas');
-            $table->integer('angkatan');
+            $table->integer('angkatan')->nullable();
             $table->string('foto_profil')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

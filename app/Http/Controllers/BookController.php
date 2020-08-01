@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
+use NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler;
+
 class BookController extends Controller
 {
     /**
@@ -13,10 +16,22 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
-        return view('buku.index',compact('books'));
+
+        $query = $request->all();
+    //    dd($query);
+        if (count($query)==0) {
+            $books = Book::orderBy("id","desc")->paginate(50);
+
+        }else{
+            $books = Book::where($query['category'],'LIKE','%'.$query['keyword']."%")->paginate(30);
+
+        }
+            return view('buku.index',[
+                'books'=> $books->appends(Input::except('page')),
+                'query'=> $query
+            ]);
     }
 
     /**
@@ -90,7 +105,7 @@ class BookController extends Controller
     {
         $buku = $request->all();
         $updateBook = Book::findOrFail($id);
-
+        dd($request->file('foto'));
         if(!empty($buku['foto'])){
              $this->deleteImage($updateBook['foto']);
              $saveFoto = $this->savePict($buku['foto']);
@@ -116,7 +131,19 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $buku = Book::findOrFail($id);
+            $this->deleteImage($buku->foto);
+            $response= [
+                'message' => $buku->judul." berhasil dihapus",
+            ];
+            $buku->delete();
+        }catch(ExceptionHandler $e){
+            $response=[
+                'message'=> $e
+            ];
+        }
+        return response()->json($response);
     }
 
     public function savePict($buku)
@@ -139,4 +166,6 @@ class BookController extends Controller
         // dd($path.$filename);
         return File::delete($path.$filename);
     }
+
+
 }

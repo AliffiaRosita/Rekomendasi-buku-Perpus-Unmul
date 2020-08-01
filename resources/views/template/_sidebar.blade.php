@@ -15,7 +15,7 @@
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layers-alt"></i><span>Master</span></a>
                         <ul class="collapse">
                         <li class="active"><a href="{{route('buku.index')}}">Buku</a></li>
-                            <li><a href="index2.html">Pengunjung</a></li>
+                            <li><a href="{{route('pengunjung.index')}}">Pengunjung</a></li>
                             <li><a href="index3.html">Akun</a></li>
                         </ul>
                     </li>
