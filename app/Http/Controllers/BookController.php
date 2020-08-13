@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler;
+use App\Http\Requests\BookRequest;
 
 class BookController extends Controller
 {
@@ -50,11 +51,13 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
         $buku = $request->all();
-        if($buku !== null){
+        if($buku['foto'] !== null){
            $saveFoto= $this->savePict($buku['foto']);
+        }else{
+            $saveFoto = null;
         }
 
         Book::create([
@@ -101,16 +104,15 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BookRequest $request, $id)
     {
         $buku = $request->all();
         $updateBook = Book::findOrFail($id);
-        dd($request->file('foto'));
         if(!empty($buku['foto'])){
              $this->deleteImage($updateBook['foto']);
              $saveFoto = $this->savePict($buku['foto']);
         }else{
-            $saveFoto = $buku['foto']; //belum selesai bagian ini
+            $saveFoto = $updateBook->foto;
         }
 
         $updateBook->update([

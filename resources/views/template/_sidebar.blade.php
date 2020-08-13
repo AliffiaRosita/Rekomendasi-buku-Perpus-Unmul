@@ -8,15 +8,14 @@
         <div class="menu-inner">
             <nav>
                 <ul class="metismenu" id="menu">
-                    <li class="active">
+                    <li >
                         <a href="{{url('/')}}" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
                     </li>
-                    <li >
+                    <li class="active">
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layers-alt"></i><span>Master</span></a>
                         <ul class="collapse">
-                        <li class="active"><a href="{{route('buku.index')}}">Buku</a></li>
-                            <li><a href="{{route('pengunjung.index')}}">Pengunjung</a></li>
-                            <li><a href="index3.html">Akun</a></li>
+                        <li class="{{Request::segment(1)==='buku'?'active':''}}"><a href="{{route('buku.index')}}">Buku</a></li>
+                            <li class="{{Request::segment(1)==='pengunjung'?'active':''}}"><a href="{{route('pengunjung.index')}}">Pengunjung</a></li>
                         </ul>
                     </li>
                 </ul>

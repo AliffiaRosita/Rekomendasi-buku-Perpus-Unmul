@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class rating extends Model
+class Rating extends Model
 {
     protected $table = 'rating';
     protected $fillable = ['pengunjung_id','buku_id','nilai','ulasan'];

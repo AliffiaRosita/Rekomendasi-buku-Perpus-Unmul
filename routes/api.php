@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('books', 'ApiBookController@getBook');
+Route::get('books/detail/{id}','ApiBookController@detailBook');
+Route::get('books/search', 'ApiBookController@searchBook');
+
+Route::get('recommendation','ApiBookController@getRecommend');
+
+Route::post('books/rate/', 'ApiBookController@saveRate');
+Route::get('books/{bookId}/allRate','ApiBookController@AllRate');
+

@@ -55,6 +55,7 @@
                         aria-describedby="inputGroupFileAddon01">
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                 </div>
+                @if ($errors->has('foto'))  <p class="text-danger">{{ $errors->first('foto') }}</p> @endif
             </div>
         </div>
     </div>

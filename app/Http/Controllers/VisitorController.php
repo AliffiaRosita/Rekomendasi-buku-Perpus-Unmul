@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Visitor;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\VisitorRequest;
 class VisitorController extends Controller
 {
     /**
@@ -11,10 +17,24 @@ class VisitorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $visitors = Visitor::orderBy('nama_pengunjung','asc')->paginate(50);
-        return view('pengunjung.index', compact('visitors'));
+        $query = $request->all();
+        $visitors =[];
+        if (count($query)==0) {
+            $visitors = Visitor::orderBy('nama_pengunjung','asc')->paginate(50);
+        }else{
+            if (isset($query['fakultas'])) {
+                $visitors = Visitor::where($query['category'],'LIKE','%'.$query['keyword'].'%')->where('fakultas','LIKE','%'.$query['fakultas'].'%')->orderBy('nim','ASC')->paginate(30);
+            }else{
+                 $visitors = Visitor::where($query['category'],'LIKE','%'.$query['keyword'].'%')->orderBy('nim','ASC')->paginate(30);
+            }
+
+        }
+        return view('pengunjung.index', [
+            'visitors'=> $visitors->appends(Input::except('page')),
+            'query'=> $query
+        ]);
     }
 
     /**
@@ -33,9 +53,32 @@ class VisitorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VisitorRequest $request)
     {
-        dd($request->all());
+        $pengunjung = $request->all();
+        $pass = Hash::make($pengunjung['password']);
+        if($pengunjung['foto_profil'] !== null){
+           $saveFoto= $this->savePict($pengunjung['foto_profil']);
+        }else{
+            $saveFoto = null;
+        }
+
+        User::create([
+            'email'=>$pengunjung['email'],
+            'password'=>$pass,
+            'role'=>'mahasiswa'
+        ]);
+        $getUserId = User::orderBy('id','DESC')->first();
+        Visitor::create([
+            'nama_pengunjung'=>$pengunjung['nama_pengunjung'],
+            'nim'=>$pengunjung['nim'],
+            'fakultas'=>$pengunjung['fakultas'],
+            'angkatan'=>$pengunjung['angkatan'],
+            'foto_profil'=>$saveFoto,
+            'user_id'=>$getUserId->id
+        ]);
+        return redirect('pengunjung');
+
 
     }
 
@@ -58,7 +101,9 @@ class VisitorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $visitor = Visitor::findOrFail($id);
+
+        return view('pengunjung.edit',compact('visitor'));
     }
 
     /**
@@ -68,9 +113,59 @@ class VisitorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Visitor $request, $id)
     {
-        //
+
+        $visitor = $request->all();
+        $updateVisitor = Visitor::findOrFail($id);
+        if(!empty($visitor['foto_profil'])){
+             $this->deleteImage($updateVisitor['foto_profil']);
+             $saveFoto = $this->savePict($visitor['foto_profil']);
+        }else{
+            $saveFoto = $updateVisitor->foto_profil;
+        }
+        if (isset($visitor['email']) == null && isset($visitor['password']) == null ) {
+
+            $updateVisitor->update([
+                'nama_pengunjung'=> $visitor['nama_pengunjung'],
+                'nim'=> $visitor['nim'],
+                'fakultas'=>$visitor['fakultas'],
+                'angkatan'=>$visitor['angkatan'],
+                'foto_profil'=> $saveFoto
+            ]);
+
+        } else {
+            $pass = Hash::make($visitor['password']);
+            User::create([
+                'email'=>$visitor['email'],
+                'password'=>$pass,
+                'role'=>'mahasiswa'
+            ]);
+            $getUserId = User::orderBy('id','DESC')->first();
+            Visitor::create([
+                'nama_pengunjung'=>$visitor['nama_pengunjung'],
+                'nim'=>$visitor['nim'],
+                'fakultas'=>$visitor['fakultas'],
+                'angkatan'=>$visitor['angkatan'],
+                'foto_profil'=>$saveFoto,
+                'user_id'=>$getUserId->id
+            ]);
+        }
+
+
+        // $updateUser= User::findOrFail($updateVisitor->user_id);
+        // if ($visitor['password']) {
+        //     $updateUser->save([
+        //         'password'=> $visitor['password'],
+        //         'email'=> $visitor['email']
+        //     ]);
+        // }else{
+        //     $updateUser->save([
+        //         'email'=> $visitor['email']
+        //     ]);
+        // }
+
+        return redirect('pengunjung');
     }
 
     /**
@@ -81,7 +176,20 @@ class VisitorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $visitor = Visitor::findOrFail($id);
+            $this->deleteImage($visitor->foto_profil);
+            $response= [
+                'message' => $visitor->nama_pengunjung." berhasil dihapus",
+            ];
+            User::where('id',$visitor->user_id)->delete();
+            $visitor->delete();
+        }catch(ExceptionHandler $e){
+            $response=[
+                'message'=> $e
+            ];
+        }
+        return response()->json($response);
     }
     public function savePict($pengunjung)
     {

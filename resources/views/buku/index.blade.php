@@ -40,7 +40,7 @@
                 </div>
             <div class="col-4">
                     <div class="input-group mb-3">
-                    <input type="text" name="keyword" value="{{isset($keyword)?$keyword:""}}" class="form-control" placeholder="Kata kunci" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <input type="text" name="keyword" value="{{isset($query['keyword'])?$query['keyword']:""}}" class="form-control" placeholder="Kata kunci" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="ti-search"></i></button>
                             </div>
@@ -77,14 +77,11 @@
                                 <td>{{$book->penerbit}}</td>
                                 <td>{{$book->isbn}}</td>
                                     <td>
-                                        {{-- {!! Form::open(['method'=>'delete', 'class'=>'d-inline', 'route'=>['buku.destroy',$book->id]]) !!} --}}
                                     <a href="{{route('buku.edit',['id'=>$book->id])}}" class="btn btn-sm btn-outline-success"><i class="ti-pencil"></i></a>
                                     <a href class="btn btn-sm btn-outline-info" data-toggle="modal" data-target=".modal-{{$book->id}}"><i class="ti-eye"></i></a>
-
-                                    {{-- <a href="{{route('buku.show',['id'=>$book->id])}}" class="btn btn-sm btn-outline-info"><i class="ti-eye"></i></a> --}}
                                             <button type="submit" class="btn btn-sm btn-outline-danger d-inline" onclick="btnDelete({{$book->id}},'buku',event)"> <i class="ti-close"></i></button>
-                                        {{-- {!! Form::close() !!} --}}
                                     </td>
+
                                     @include('buku/_modal')
 
                                 </tr>
