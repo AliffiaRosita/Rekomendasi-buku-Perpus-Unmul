@@ -5,16 +5,43 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\Rating;
 use App\Recommend;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ApiBookController extends Controller
 {
     public function getBook()
     {
         $books = Book::paginate(10);
+        $books->getCollection()->transform(function($value){
+            if(empty($value->foto)){
+                $foto = null;
+            }else{
+                $foto= url('image/buku/'.$value->foto);
+            }
+            return [
+                'judul'=>$value->judul,
+                'penerbit'=> $value->penerbit,
+                'isbn'=>$value->isbn,
+                'deskripsi'=>$value->deskripsi,
+                'tempat_terbit'=> $value->tempat_terbit,
+                'foto'=>$foto
+            ];
+        });
+
+        // foreach ($books as $book) {
+        //     $data[] =[
+                // 'judul'=>$book->judul,
+                // 'cover'=> url('image/buku/'.$book->foto),
+                // 'penerbit'=> $book->penerbit,
+                // 'isbn'=>$book->isbn,
+                // 'deskripsi'=>$book->deskripsi,
+                // 'tempat_terbit'=> $book->tempat_terbit,
+        //     ];
+        // }
+        // $data->paginate(10);
         return response()->json([
             'data'=>$books,
             'message'=>'berhasil fetch data',
@@ -24,8 +51,7 @@ class ApiBookController extends Controller
 
     public function detailBook($id)
     {
-
-        $visitorId = 13221; //nanti diganti pake visitor yg ada di login
+        $visitorId = Auth::user()->visitor->id; //nanti diganti pake visitor yg ada di login
         $books = Book::findOrFail($id);
         $ratings = Rating::where('buku_id',$id)->where('pengunjung_id',$visitorId)->first();
         $data=[
@@ -57,8 +83,7 @@ class ApiBookController extends Controller
 
     public function getRecommend(Request $request)
     {
-        $user = User::findOrFail($request->user_id);
-        $recommend = Recommend::where('pengunjung_id',$user->visitor->id)->get();
+        $recommend = Recommend::where('pengunjung_id',Auth::user()->visitor->id)->get();
         if (count($recommend) == 0) {
            $data = null;
         } else {
@@ -84,9 +109,8 @@ class ApiBookController extends Controller
             DB::beginTransaction();
 
             $data = $request->all();
-            $user = User::findOrFail($data['user_id']);
             Rating::updateOrCreate([
-                'pengunjung_id'=> $user->visitor->id,
+                'pengunjung_id'=> Auth::user()->visitor->id,
                 'buku_id'=> $data['buku_id']
             ],[
                 'nilai'=> $data['nilai'],

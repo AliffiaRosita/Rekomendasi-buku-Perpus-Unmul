@@ -20,6 +20,7 @@ class CreateBooksTable extends Migration
             $table->string('foto')->nullable();
             $table->string('penerbit');
             $table->string('isbn');
+            $table->string('tempat_terbit')->nullable();
             $table->timestamps();
         });
     }

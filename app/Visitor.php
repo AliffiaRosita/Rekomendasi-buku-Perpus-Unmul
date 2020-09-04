@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class visitor extends Model
+class Visitor extends Model
 {
 
     protected $table = 'pengunjung';

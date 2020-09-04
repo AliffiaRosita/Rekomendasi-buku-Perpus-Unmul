@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col">
                     <div id='img_contain'>
-                    <img id="img" src="{{isset($visitor->foto_profil)? asset("storage/image/pengunjung/".$visitor->foto_profil): "http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png"}}" height="200px" width="100px"
+                    <img id="img" src="{{isset($visitor->foto_profil)? asset("image/pengunjung/".$visitor->foto_profil): "http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png"}}" height="200px" width="100px"
                             alt="your image" title='' /></div>
                     <div class="input-group">
                         <div class="custom-file">

@@ -5,7 +5,7 @@
               <h5>Detail Pengunjung</h5>
           </div>
           <div class="modal-body">
-                <img src="{{asset("storage/image/pengunjung/".$visitor->foto_profil)}}"  class="img-thumbnail ml-auto mr-auto d-block" alt="">
+                <img src="{{asset("image/pengunjung/".$visitor->foto_profil)}}"  class="img-thumbnail ml-auto mr-auto d-block" alt="">
 
             <div class="row pt-3">
                 <div class="col">

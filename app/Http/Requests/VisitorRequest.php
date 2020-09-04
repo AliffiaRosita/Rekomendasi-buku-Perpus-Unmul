@@ -23,14 +23,15 @@ class VisitorRequest extends FormRequest
      */
     public function rules()
     {
+        $pengunjung_id = \Request::segments()[1];
         $rules=[
             'nama_pengunjung' =>'required',
-            'nim'=> 'required | numeric|unique:pengunjung',
+            'nim'=> 'sometimes|required | numeric|unique:pengunjung,nim,'.$pengunjung_id,
             'fakultas'=>'required',
             'angkatan' => 'required | numeric',
-            'email'=>'required| unique:users',
+            'email'=>'sometimes|email|required| unique:users',
             'password'=>'required| min:8',
-            'foto' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
+            'foto_profil' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
         ];
         return $rules;
     }
@@ -47,8 +48,8 @@ class VisitorRequest extends FormRequest
             'email.unique'=>'Email telah terdaftar',
             'password.min'=>'Password Minimal minimal harus 8 karakter.',
             'password.required'=>'Password wajib diisi',
-            'foto.mimes'=>'Extensi Foto Harus .jpg, .png, atau .jpeg',
-            'foto.max'=>'Ukuran Foto Maksimal 3 MB.'
+            'foto_profil.mimes'=>'Extensi Foto Harus .jpg, .png, atau .jpeg',
+            'foto_profil.max'=>'Ukuran Foto Maksimal 3 MB.'
         ];
     }
 }

@@ -16,13 +16,18 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::post('login','ApiVisitorController@login');
+Route::post('register','ApiVisitorController@register');
+Route::middleware('auth:api')->group(function(){
+    Route::get('books', 'ApiBookController@getBook');
+    Route::get('books/detail/{id}','ApiBookController@detailBook');
+    Route::get('books/search', 'ApiBookController@searchBook');
 
-Route::get('books', 'ApiBookController@getBook');
-Route::get('books/detail/{id}','ApiBookController@detailBook');
-Route::get('books/search', 'ApiBookController@searchBook');
+    Route::get('recommendation','ApiBookController@getRecommend');
 
-Route::get('recommendation','ApiBookController@getRecommend');
-
-Route::post('books/rate/', 'ApiBookController@saveRate');
-Route::get('books/{bookId}/allRate','ApiBookController@AllRate');
+    Route::post('books/rate/', 'ApiBookController@saveRate');
+    Route::get('books/{bookId}/allRate','ApiBookController@AllRate');
+    Route::post('user/update', 'ApiVisitorController@updateProfile');
+    Route::post('user/update/password', 'ApiVisitorController@updatePassword');
+});
 

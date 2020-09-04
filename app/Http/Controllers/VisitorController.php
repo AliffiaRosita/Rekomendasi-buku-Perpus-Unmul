@@ -17,6 +17,8 @@ class VisitorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index(Request $request)
     {
         $query = $request->all();
@@ -57,10 +59,10 @@ class VisitorController extends Controller
     {
         $pengunjung = $request->all();
         $pass = Hash::make($pengunjung['password']);
-        if($pengunjung['foto_profil'] !== null){
-           $saveFoto= $this->savePict($pengunjung['foto_profil']);
-        }else{
+        if(isset($pengunjung['foto_profil']) == null){
             $saveFoto = null;
+        }else{
+            $saveFoto= $this->savePict($pengunjung['foto_profil']);
         }
 
         User::create([
@@ -113,9 +115,9 @@ class VisitorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Visitor $request, $id)
+    public function update(VisitorRequest $request, $id)
     {
-
+        dd($request);
         $visitor = $request->all();
         $updateVisitor = Visitor::findOrFail($id);
         if(!empty($visitor['foto_profil'])){
@@ -196,8 +198,10 @@ class VisitorController extends Controller
         if(!empty($pengunjung))
         {
             $new_name = rand().'.'.$pengunjung->getClientOriginalExtension();
-            $path_foto = storage_path().'/app/public/image/pengunjung/'.$new_name;
-            Image::make($pengunjung)->save($path_foto);
+            $pengunjung->move('image/pengunjung',$new_name);
+
+            // $path_foto = storage_path().'/app/public/image/pengunjung/'.$new_name;
+            // Image::make($pengunjung)->save($path_foto);
 
             $name = $new_name;
         } else {
@@ -207,8 +211,8 @@ class VisitorController extends Controller
     }
 
     public function deleteImage($filename) {
-        $path = storage_path('app/public/image/pengunjung/');
+        // $path = storage_path('app/public/image/pengunjung/');
         // dd($path.$filename);
-        return File::delete($path.$filename);
+        return File::delete('image/pengunjung/'.$filename);
     }
 }

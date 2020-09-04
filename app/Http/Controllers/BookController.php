@@ -104,7 +104,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BookRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $buku = $request->all();
         $updateBook = Book::findOrFail($id);
@@ -153,8 +153,9 @@ class BookController extends Controller
         if(!empty($buku))
         {
             $new_name = rand().'.'.$buku->getClientOriginalExtension();
-            $path_foto = storage_path().'/app/public/image/buku/'.$new_name;
-            Image::make($buku)->save($path_foto);
+           $buku->move('image/buku',$new_name);
+            // $path_foto = storage_path().'/app/public/image/buku/'.$new_name;
+            // Image::make($buku)->save($path_foto);
 
             $name = $new_name;
         } else {
@@ -164,9 +165,9 @@ class BookController extends Controller
     }
 
     public function deleteImage($filename) {
-        $path = storage_path('app/public/image/buku/');
+        // $path = storage_path('app/public/image/buku/');
         // dd($path.$filename);
-        return File::delete($path.$filename);
+        return File::delete('image/buku/'.$filename);
     }
 
 

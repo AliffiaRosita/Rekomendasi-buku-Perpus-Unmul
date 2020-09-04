@@ -10,7 +10,7 @@
                       </button>
               </div>
               <div class="modal-body">
-                <img src="{{asset("storage/image/buku/".$book->foto)}}"  class="img-thumbnail" alt="">
+                <img src="{{asset("/image/buku/".$book->foto)}}"  class="img-thumbnail" alt="">
                 <div class="row mt-3">
                     <div class="col-4">
                         <h5>Penerbit</h5>
