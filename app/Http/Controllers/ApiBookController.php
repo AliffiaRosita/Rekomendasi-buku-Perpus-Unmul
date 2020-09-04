@@ -54,6 +54,7 @@ class ApiBookController extends Controller
         $visitorId = Auth::user()->visitor->id; //nanti diganti pake visitor yg ada di login
         $books = Book::findOrFail($id);
         $ratings = Rating::where('buku_id',$id)->where('pengunjung_id',$visitorId)->first();
+
         $data=[
             "bookId"=> $books->id,
             "judul"=> $books->judul,
@@ -61,8 +62,8 @@ class ApiBookController extends Controller
             "foto"=> $books->foto,
             "penerbit"=> $books->penerbit ,
             "isbn"=> $books->isbn ,
-            'rating'=> $ratings->nilai,
-            'ulasan'=> $ratings->ulasan
+            'rating'=> isset($ratings)?$ratings->nilai:0,
+            'ulasan'=> isset($ratings)?$ratings->ulasan:null
         ];
         return response()->json([
             'data'=>$data,
@@ -74,6 +75,21 @@ class ApiBookController extends Controller
     public function searchBook(Request $request)
     {
         $books = Book::where('judul','like','%'.$request->keyword.'%')->paginate(10);
+        $books->getCollection()->transform(function($value){
+            if(empty($value->foto)){
+                $foto = null;
+            }else{
+                $foto= url('image/buku/'.$value->foto);
+            }
+            return [
+                'judul'=>$value->judul,
+                'penerbit'=> $value->penerbit,
+                'isbn'=>$value->isbn,
+                'deskripsi'=>$value->deskripsi,
+                'tempat_terbit'=> $value->tempat_terbit,
+                'foto'=>$foto
+            ];
+        });
         return response()->json([
             'data'=>$books->appends(Input::except('page')),
             'message'=> 'pencarian berhasil',
@@ -81,18 +97,24 @@ class ApiBookController extends Controller
         ],200);
     }
 
-    public function getRecommend(Request $request)
+    public function getRecommend()
     {
         $recommend = Recommend::where('pengunjung_id',Auth::user()->visitor->id)->get();
-        if (count($recommend) == 0) {
+        if (count($recommend) ==0) {
            $data = null;
         } else {
+
             foreach ($recommend as $item) {
+                if(empty($item->buku->foto)){
+                    $foto = null;
+                }else{
+                    $foto= url('image/buku/'.$item->buku->foto);
+                }
                 $data[] = [
                     "id_buku"=> $item->buku_id,
                     "judul"=> $item->buku->judul,
                     "deskripsi"=> $item->buku->deskripsi,
-                    "foto"=> $item->buku->foto,
+                    "foto"=> $foto,
                 ];
             }
         }
@@ -131,12 +153,16 @@ class ApiBookController extends Controller
     public function AllRate($bookId)
     {
         $rate = Rating::where('buku_id',$bookId)->get();
-        foreach ($rate as $item) {
-            $data[]=[
-                'visitor_name'=> $item->visitor->nama_pengunjung,
-                'rating'=> $item->nilai,
-                'ulasan'=>$item->ulasan
-            ];
+        if(count($rate) == 0){
+            $data=null;
+        }else{
+            foreach ($rate as $item) {
+                $data[]=[
+                    'visitor_name'=> $item->visitor->nama_pengunjung,
+                    'rating'=> $item->nilai,
+                    'ulasan'=>$item->ulasan
+                ];
+            }
         }
         return response()->json([
             'data'=>$data,
