@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 class ApiVisitorController extends Controller
 {
     public function login(Request $request)
@@ -22,11 +23,15 @@ class ApiVisitorController extends Controller
             if($check){
 
                $success = auth()->user()->createToken('App')->accessToken;
+                if(empty($visitor->foto_profil)){
+                    $pict_url = null;
+                }else{
                 $pict_url = url('image/pengunjung/'.$visitor->foto_profil);
 
+                }
                $data=[
                    'user_id' => $visitor->user_id,
-                   'nama '=> $visitor->nama_pengunjung,
+                   'nama'=> $visitor->nama_pengunjung,
                    'token'=>  $success,
                    'nim' => $visitor->nim,
                    'fakultas'=> $visitor->fakultas,
@@ -83,24 +88,75 @@ class ApiVisitorController extends Controller
             $visitor = $request->all();
             $getVisitor = Visitor::findOrFail(Auth::user()->visitor->id);
 
+                if(empty($visitor['foto_profil'])){
+                    if($getVisitor->foto_profil == null){
+                        $foto = null;
+                    }else{
+                        $foto = $getVisitor->foto_profil;
+                    }
+                }else{
+                    if($getVisitor->foto_profil == null){
+                        $foto= $this->savePict($visitor['foto_profil']);
+                    }else{
+                        $this->deleteImage($getVisitor->foto_profil);
+                        $foto = $this->savePict($visitor['foto_profil']);
+                    }
+                }
+
             $getVisitor->update([
                 'nama_pengunjung'=>$visitor['nama_pengunjung'],
-                'nim'=>$visitor['nim'],
                 'fakultas'=>$visitor['fakultas'],
                 'angkatan'=>$visitor['angkatan'],
-                'foto_profil'=>null,
+                'foto_profil'=>$foto,
                 'user_id'=>Auth::user()->id,
             ]);
             DB::commit();
 
+            if(empty($getVisitor->foto_profil)){
+                $pict_url = null;
+            }else{
+                $pict_url = url('image/pengunjung/'.$foto);
+            }
+
             return response()->json([
-                'message'=> 'berhasil update profil'
+                'message'=> 'berhasil update profil',
+                'nama'=> $visitor['nama_pengunjung'],
+                'fakultas'=> $visitor['fakultas'],
+                'angkatan'=>$visitor['angkatan'],
+                'foto_profil'=> $pict_url
             ]);
         }catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
     }
+
+// foto
+public function savePict($buku)
+{
+    if(!empty($buku))
+    {
+        $new_name = rand().'.'.$buku->getClientOriginalExtension();
+       $buku->move('image/pengunjung',$new_name);
+        // $path_foto = storage_path().'/app/public/image/buku/'.$new_name;
+        // Image::make($buku)->save($path_foto);
+
+        $name = $new_name;
+    } else {
+        $name = null;
+    }
+return $name;
+}
+
+public function deleteImage($filename) {
+    // $path = storage_path('app/public/image/buku/');
+    // dd($path.$filename);
+    // dd($filename);
+    return File::delete('image/pengunjung/'.$filename);
+}
+
+// endFoto
+
 
     public function updatePassword(Request $request)
     {

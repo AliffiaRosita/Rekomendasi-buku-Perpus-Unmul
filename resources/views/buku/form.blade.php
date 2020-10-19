@@ -23,7 +23,15 @@
         </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            {!! Form::label('tempat_terbit', 'Tempat Terbit*', ['class'=> 'form-label']) !!}
+            {!! Form::text('tempat_terbit', null, ['class'=> 'form-control','id'=>'tempat_terbit', 'autofocus']) !!}
+            @if ($errors->has('tempat_terbit')) <p class="text-danger">{{ $errors->first('penerbit') }} @endif
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">

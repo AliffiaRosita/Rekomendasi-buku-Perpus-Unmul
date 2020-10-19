@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Similarity extends Model
 {
 
-    protected $table = 'rating';
-    protected $fillable = ['pengunjung_id','buku_id1','buku_id2','nilai_cosine'];
+    protected $table = 'similarity';
+    protected $fillable = ['buku_id1','buku_id2','nilai_cosine','pengunjung_id'];
     public function visitor()
     {
         return $this->belongsTo('App\Visitor', 'pengunjung_id');

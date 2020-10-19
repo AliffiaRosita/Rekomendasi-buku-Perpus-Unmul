@@ -19,8 +19,8 @@ class CreateSimilaritiesTable extends Migration
             $table->unsignedBigInteger('buku_id2');
             $table->unsignedBigInteger('pengunjung_id');
             $table->double('nilai_cosine');
-            $table->foreign('buku_id1')->references('id')->on('buku')->onDelete('cascade');
-            $table->foreign('buku_id2')->references('id')->on('buku')->onDelete('cascade');
+            $table->foreign('buku_id1')->references('id')->on('buku')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('buku_id2')->references('id')->on('buku')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
 
             $table->timestamps();

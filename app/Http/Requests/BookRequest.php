@@ -27,6 +27,7 @@ class BookRequest extends FormRequest
             'judul' =>'required',
             'penerbit'=> 'required',
             'isbn' => 'required',
+            'tempat_terbit'=>'required',
             'foto' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
         ];
         return $rules;
@@ -36,7 +37,8 @@ class BookRequest extends FormRequest
         return[
             'judul.required'=>'Judul Buku wajib diisi',
             'penerbit.required'=>'Penerbit wajib diisi',
-            'isbn.required'=>'isbn wajib diisi',
+            'isbn.required'=>'ISBN wajib diisi',
+            'tempat_terbit.required'=>'tempat terbit wajib diisi',
             'foto.mimes'=>'Extensi Foto Harus .jpg, .png, atau .jpeg',
             'foto.max'=>'Ukuran Foto Maksimal 3 MB.'
         ];

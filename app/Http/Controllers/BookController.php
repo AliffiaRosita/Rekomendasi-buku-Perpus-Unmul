@@ -54,7 +54,7 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $buku = $request->all();
-        if($buku['foto'] !== null){
+        if(!empty($buku['foto'])){
            $saveFoto= $this->savePict($buku['foto']);
         }else{
             $saveFoto = null;
@@ -65,6 +65,7 @@ class BookController extends Controller
             'deskripsi'=> $buku['deskripsi'],
             'isbn'=>$buku['isbn'],
             'penerbit'=>$buku['penerbit'],
+            'tempat_terbit'=> $buku['tempat_terbit'],
             'foto'=> $saveFoto
         ]);
         return redirect('buku');
@@ -119,6 +120,7 @@ class BookController extends Controller
             'judul'=> $buku['judul'],
             'deskripsi'=> $buku['deskripsi'],
             'isbn'=>$buku['isbn'],
+            'tempat_terbit'=> $buku['tempat_terbit'],
             'penerbit'=>$buku['penerbit'],
             'foto'=> $saveFoto
         ]);

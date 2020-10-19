@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $table = 'buku';
-    protected $fillable = ['judul','deskripsi','foto','penerbit','isbn'];
+    protected $fillable = ['judul','deskripsi','foto','penerbit','isbn','tempat_terbit'];
 
    public function rating()
    {

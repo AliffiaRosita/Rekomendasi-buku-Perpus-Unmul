@@ -17,5 +17,9 @@ class Rating extends Model
     {
         return $this->belongsTo('App\Book', 'buku_id');
     }
+    public function rateInBook()
+    {
+        return $this->belongsTo('App\Book', 'buku_id')->selectRaw('avg(nilai)')->groupBy('buku_id');
+    }
 
 }

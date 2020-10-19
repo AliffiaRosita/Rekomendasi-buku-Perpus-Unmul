@@ -23,11 +23,14 @@ Route::middleware('auth:api')->group(function(){
     Route::get('books/detail/{id}','ApiBookController@detailBook');
     Route::get('books/search', 'ApiBookController@searchBook');
 
-    Route::get('recommendation','ApiBookController@getRecommend');
+    // Route::get('recommendation','ApiBookController@getRecommend');
+    Route::get('recommendation','ApiRecommendController@getRecommend');
 
     Route::post('books/rate/', 'ApiBookController@saveRate');
-    Route::get('books/{bookId}/allRate','ApiBookController@AllRate');
+    Route::get('books/{bookId}/allRate','ApiBookController@allRate');
     Route::post('user/update', 'ApiVisitorController@updateProfile');
     Route::post('user/update/password', 'ApiVisitorController@updatePassword');
+    Route::get('books/mostRated','ApiBookController@mostRatedBook');
 });
+
 

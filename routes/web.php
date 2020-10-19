@@ -11,9 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
-});
+Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
 
-Route::resource('buku', 'BookController');
-Route::resource('pengunjung', 'VisitorController');
+    Route::get('/', function () {
+        return view('landingpage');
+    });
+
+    Route::resource('buku', 'BookController');
+    Route::resource('pengunjung', 'VisitorController');
+
+
+    Route::get('/home', 'HomeController@index')->name('home');
+});
