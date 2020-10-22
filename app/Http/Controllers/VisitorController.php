@@ -117,7 +117,7 @@ class VisitorController extends Controller
      */
     public function update(VisitorRequest $request, $id)
     {
-        dd($request);
+        
         $visitor = $request->all();
         $updateVisitor = Visitor::findOrFail($id);
         if(!empty($visitor['foto_profil'])){
@@ -193,6 +193,14 @@ class VisitorController extends Controller
         }
         return response()->json($response);
     }
+
+    public function showProfile($id)
+    {
+        $visitor = Visitor::findOrFail($id);
+        return view('profile.show',compact('visitor'));
+    }
+
+
     public function savePict($pengunjung)
     {
         if(!empty($pengunjung))

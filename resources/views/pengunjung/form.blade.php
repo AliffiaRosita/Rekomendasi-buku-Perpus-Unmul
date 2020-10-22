@@ -71,7 +71,18 @@
                 </div>
             </div>
     @else
-            <div></div>
+            <div class="row pt-3">
+                    <div class="col-6">
+                            <div class="form-group">
+                                {!! Form::label('password', 'Password*', ['class'=> 'form-label']) !!}
+                                {!! Form::password('password',['class'=> 'form-control', 'id'=>'password', 'autofocus']) !!}
+                                <small >
+                                    Kosongkan input bila tidak mengubah password (Password Minimal 8 karakter)
+                                </small>
+                                @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }} @endif
+                            </div>
+                        </div>
+                    </div>
     @endif
 
     <div class="row mb-5">

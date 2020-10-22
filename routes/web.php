@@ -21,6 +21,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('buku', 'BookController');
     Route::resource('pengunjung', 'VisitorController');
 
-
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('profile/{id}', 'VisitorController@showProfile')->name('profile.edit');
 });
