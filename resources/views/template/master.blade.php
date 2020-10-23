@@ -30,6 +30,7 @@
             @include('template._header')
             <!-- header area end -->
             <!-- page title area start -->
+            @include('sweetalert::alert')
             @yield('content')
         </div>
         <!-- main content area end -->

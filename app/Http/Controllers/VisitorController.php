@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\VisitorRequest;
+use Alert;
 class VisitorController extends Controller
 {
     /**
@@ -79,6 +80,8 @@ class VisitorController extends Controller
             'foto_profil'=>$saveFoto,
             'user_id'=>$getUserId->id
         ]);
+        Alert::success('Sukses tambah pengunjung','');
+
         return redirect('pengunjung');
 
 
@@ -189,7 +192,7 @@ class VisitorController extends Controller
         //         'email'=> $visitor['email']
         //     ]);
         // }
-
+        Alert::success('Sukses ubah pengunjung','');
         return redirect('pengunjung');
     }
 

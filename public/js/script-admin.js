@@ -3,13 +3,13 @@ function btnDelete(id,url_name,e){
     var url = `${url_name}/${id} `;
 
     Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    title: 'Apakah kamu yakin ingin menghapus data?',
+    text: "data yang telah dihapus tidak bisa dikembalikan",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Hapus'
     }).then((result) => {
     if (result.value) {
         $.ajax({
@@ -24,10 +24,10 @@ function btnDelete(id,url_name,e){
             },
             success: function(res){
                 Swal.fire(
-                'Deleted!',
+                'Data terhapus',
                 res.message,
                 'success'
-                )
+                );
                 location.reload();
             },
             error:function (xhr) {

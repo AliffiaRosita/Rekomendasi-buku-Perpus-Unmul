@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler;
 use App\Http\Requests\BookRequest;
+use Alert;
 
 class BookController extends Controller
 {
@@ -68,6 +69,8 @@ class BookController extends Controller
             'tempat_terbit'=> $buku['tempat_terbit'],
             'foto'=> $saveFoto
         ]);
+        Alert::success('Sukses tambah buku','');
+
         return redirect('buku');
     }
 
@@ -124,6 +127,8 @@ class BookController extends Controller
             'penerbit'=>$buku['penerbit'],
             'foto'=> $saveFoto
         ]);
+
+        Alert::success('Sukses ubah buku','');
         return redirect('buku');
     }
 
