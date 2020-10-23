@@ -23,17 +23,17 @@ class VisitorRequest extends FormRequest
      */
     public function rules()
     {
-        if (isset(\Request::segments()[1])) {
-            $pengunjung_id = \Request::segments()[1];
-            $rules=[
-                'nama_pengunjung' =>'required',
-                'nim'=> 'sometimes|required | numeric|unique:pengunjung,nim,'.$pengunjung_id,
-                'fakultas'=>'required',
-                'angkatan' => 'required | numeric',
-                'email'=>'sometimes|email|required| unique:users',
-                'foto_profil' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
-            ];
-        }else{
+        // if (isset(\Request::segments()[1])) {
+        //     $pengunjung_id = \Request::segments()[1];
+        //     $rules=[
+        //         'nama_pengunjung' =>'required',
+        //         'nim'=> 'sometimes|required | numeric|unique:pengunjung,nim,'.$pengunjung_id,
+        //         'fakultas'=>'required',
+        //         'angkatan' => 'required | numeric',
+        //         'email'=>'sometimes|email|required| unique:users',
+        //         'foto_profil' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
+        //     ];
+        // }else{
             $rules=[
                 'nama_pengunjung' =>'required',
                 'nim'=> 'sometimes|required | numeric|unique:pengunjung,nim,',
@@ -43,7 +43,7 @@ class VisitorRequest extends FormRequest
                 'password'=>'required| min:8',
                 'foto_profil' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
             ];
-        }
+        // }
         return $rules;
     }
     public function messages()

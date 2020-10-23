@@ -6,7 +6,7 @@
         <div class="col-lg-6 col-ml-12">
             <div class="row">
                 <!-- Textual inputs start -->
-                @if ($errors->any())
+                {{-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -14,7 +14,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif --}}
                 <div class="col-12 mt-5">
                     <div class="card">
                         <div class="card-body">
@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <div class="row justify-content-center">
                                     <div class="col-2">
-                                        <button class="btn btn-success">Simpan</button>
+                                        <button class="btn btn-success" >Simpan</button>
                                     </div>
                                 </div>
                             </div>
@@ -43,3 +43,8 @@
 
 
 @endsection
+@push('js')
+    <script>
+    $('document')
+    </script>
+@endpush
