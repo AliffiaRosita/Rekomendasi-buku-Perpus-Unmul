@@ -12,15 +12,19 @@
 */
 
 Auth::routes();
-Route::group(['middleware' => ['auth']], function () {
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+Route::group(['middleware' => ['role','auth']], function () {
 
-    Route::get('/', function () {
-        return view('landingpage');
-    });
+    Route::get('/dashboard', 'DashboardController@monthlyVisitor');
 
     Route::resource('buku', 'BookController');
     Route::resource('pengunjung', 'VisitorController');
 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('profile/{id}', 'VisitorController@showProfile')->name('profile.edit');
+    Route::get('profile/{id}', 'VisitorController@showProfile')->name('profile.show');
+    Route::get('profile/{id}/edit', 'VisitorController@editProfile')->name('profile.edit');
+    Route::put('profile/{id}', 'VisitorController@updateProfile')->name('profile.update');
+
 });

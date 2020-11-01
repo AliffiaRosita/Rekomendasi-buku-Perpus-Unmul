@@ -8,7 +8,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login - srtdash</title>
+    <title>Login</title>
+    <link rel="icon" href="{{asset('image/unmul.png')}}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('template._css')
 </head>
@@ -23,6 +25,15 @@
     </div>
     <!-- preloader area end -->
     <!-- login area start -->
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="login-area">
         <div class="container">
             <div class="login-box ptb--100">

@@ -27,7 +27,7 @@
                         </div>
 
 
-                    <a href="{{route('pengunjung.edit',['id'=>$visitor->id])}}" class="btn btn-success">Edit Profile</a>
+                    <a href="{{route('profile.edit',['id'=>$visitor->id])}}" class="btn btn-success">Edit Profile</a>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ class CreateVisitorsTable extends Migration
         Schema::create('pengunjung', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_pengunjung');
-            $table->integer('nim');
+            $table->string('nim');
             $table->text('fakultas');
             $table->integer('angkatan')->nullable();
             $table->string('foto_profil')->nullable();

@@ -6,7 +6,6 @@
                 <div class="breadcrumbs-area clearfix">
                     <h4 class="page-title pull-left">Buku</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="index.html">Master</a></li>
                         <li><a href="index.html">Buku</a></li>
 
                         <li><span></span></li>
