@@ -27,4 +27,15 @@ Route::group(['middleware' => ['role','auth']], function () {
     Route::get('profile/{id}/edit', 'VisitorController@editProfile')->name('profile.edit');
     Route::put('profile/{id}', 'VisitorController@updateProfile')->name('profile.update');
 
+    Route::get('perhitungan','CalculationController@showCalc')->name('calc.show');
+
+
+    // AJAX
+    Route::get('dashboard/bukularis', 'DashboardController@bukuLaris')->name('dashboard.chart1');
+    Route::get('dashboard/pengunjungBulanan', 'DashboardController@pengunjungBulanan')->name('dashboard.chart2');
+
+
 });
+Route::get('perhitungan/similarity','CalculationController@cosineSimilarity')->name('calc.sim');
+Route::get('perhitungan/prediction','CalculationController@prediction')->name('calc.predict');
+

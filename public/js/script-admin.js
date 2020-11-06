@@ -45,35 +45,6 @@ function btnDelete(id,url_name,e){
 
     }
 
-// function btnUpdate(id) {
-//     const url = "pengunjung/"+id;
-//     $.ajax({
-//         headers:{
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         },
-//         url: url,
-//         method: 'POST',
-//         data:{
-//             _method: "PUT",
-//             id:id,
-//         },
-//         success: function(res){
-//             Swal.fire(
-//             'Deleted!',
-//             res.message,
-//             'success'
-//             )
-//             location.reload();
-//         },
-//         error:function (xhr) {
-//             console.log(xhr);
-//             swal({
-//                 title : "Gagal",
-//                 text : "Gagal menghapus data",
-//                 icon : "error"
-//             });
-//         },
 
-//     });
-//   }
+
 

@@ -152,8 +152,6 @@ class ApiRecommendController extends Controller
             }
         }
         $this->prediction($data, $itemKosong, $visitorId);
-
-
     }
 
      public function prediction($data,$itemKosong,$visitorId)
