@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
+
 class ApiVisitorController extends Controller
 {
     public function login(Request $request)
@@ -20,7 +22,7 @@ class ApiVisitorController extends Controller
             ],404);
         }else{
             $check=Auth::attempt(['id' => $visitor->user_id, 'password' => $request->password]);
-            if($check){
+            if($check && $visitor->user->role == 'mahasiswa'){
 
                $success = auth()->user()->createToken('App')->accessToken;
                 if(empty($visitor->foto_profil)){
@@ -55,7 +57,11 @@ class ApiVisitorController extends Controller
         try {
             DB::beginTransaction();
             $pengunjung = $request->all();
-            // dd($pengunjung);
+            $validator = Validator::make($pengunjung, [
+                'nim' => 'sometimes|unique:pengunjung,nim,',
+            ])->validate();
+            // dd($validator);
+
             $pass = Hash::make($pengunjung['password']);
             User::create([
                 'email'=>null,
@@ -72,9 +78,12 @@ class ApiVisitorController extends Controller
                 'user_id'=>$getUserId->id
             ]);
             DB::commit();
-            return response()->json([
-                'message'=>'berhasil membuat user',
-            ]);
+
+            // if (response()->code == 200) {
+                return response()->json([
+                    'message'=>'berhasil membuat user',
+                ],200);
+            // }
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
@@ -148,14 +157,15 @@ public function savePict($buku)
 return $name;
 }
 
-public function deleteImage($filename) {
-    // $path = storage_path('app/public/image/buku/');
-    // dd($path.$filename);
-    // dd($filename);
-    return File::delete('image/pengunjung/'.$filename);
-}
 
-// endFoto
+    public function deleteImage($filename) {
+        // $path = storage_path('app/public/image/buku/');
+        // dd($path.$filename);
+        // dd($filename);
+        return File::delete('image/pengunjung/'.$filename);
+    }
+
+    // endFoto
 
 
     public function updatePassword(Request $request)

@@ -16,27 +16,27 @@ class UserTableSeeder extends Seeder
             'email'  =>  str_random(10) . '@email.com',
             'password' => bcrypt('123123'),
             'role'=>'mahasiswa'
-        ],
-        [
-            'email'  =>  str_random(10) . '@email.com',
-            'password' => bcrypt('123123'),
-            'role'=>'mahasiswa'
-        ],
-        [
-            'email'  =>  str_random(10) . '@email.com',
-            'password' => bcrypt('123123'),
-            'role'=>'mahasiswa'
-        ],[
-            'email'  =>  str_random(10) . '@email.com',
-            'password' => bcrypt('123123'),
-            'role'=>'mahasiswa'
-        ],
-        [
-            'email'  =>  str_random(10) . '@email.com',
-            'password' => bcrypt('123123'),
-            'role'=>'mahasiswa'
-        ]
-    ];
+        ]];
+    //     [
+    //         'email'  =>  str_random(10) . '@email.com',
+    //         'password' => bcrypt('123123'),
+    //         'role'=>'mahasiswa'
+    //     ],
+    //     [
+    //         'email'  =>  str_random(10) . '@email.com',
+    //         'password' => bcrypt('123123'),
+    //         'role'=>'mahasiswa'
+    //     ],[
+    //         'email'  =>  str_random(10) . '@email.com',
+    //         'password' => bcrypt('123123'),
+    //         'role'=>'mahasiswa'
+    //     ],
+    //     [
+    //         'email'  =>  str_random(10) . '@email.com',
+    //         'password' => bcrypt('123123'),
+    //         'role'=>'mahasiswa'
+    //     ]
+    // ];
 
     foreach ($data as $item) {
         \App\User::create($item);

@@ -26,7 +26,7 @@ Route::middleware('auth:api')->group(function(){
     // Route::get('recommendation','ApiBookController@getRecommend');
     Route::get('recommendation','ApiRecommendController@getRecommend');
 
-    Route::post('books/rate/', 'ApiBookController@saveRate');
+    Route::post('books/rate/save', 'ApiBookController@saveRate');
     Route::get('books/{bookId}/allRate','ApiBookController@allRate');
     Route::post('user/update', 'ApiVisitorController@updateProfile');
     Route::post('user/update/password', 'ApiVisitorController@updatePassword');

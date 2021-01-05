@@ -13,10 +13,11 @@ class CalculationController extends Controller
 {
     public function showCalc()
     {
-        $books = Book::all();
-        $visitors = Visitor::all();
+        $books = Rating::select("buku_id")->distinct()->get();
+        $visitors = Rating::select("pengunjung_id")->distinct()->get();
         $rating = Rating::all();
         $data = $this->createMatrix();
+
         return view('perhitungan.show',compact(
             'books',
             'visitors',
@@ -188,14 +189,16 @@ class CalculationController extends Controller
                         'nilai_prediksi'=>$roundPrediksi
                    ]
                    );
-                   $dataApi[]= [
-                    "buku_id"=>$idItem1,
-                    "nilai_prediksi"=>$roundPrediksi
-                   ];
+                //    $dataApi[]= [
+                //     "buku_id"=>$idItem1,
+                //     "nilai_prediksi"=>$roundPrediksi
+                //    ];
                    $sumAtas = 0;
                    $sumBawah=0;
                }
        }
+
+       $dataApi=Recommend::where('pengunjung_id',$id)->orderBy('nilai_prediksi','DESC')->get();
        return response()->json($dataApi,200);
     }
 }

@@ -122,6 +122,8 @@ class ApiRecommendController extends Controller
                 $bukuId2 = $bukubisadipasangkan[$j];
                 foreach ($userRating as $userRat) {
                     $visitorId2 = $userRat->pengunjung_id;
+                    // $rata = Rating::where('pengunjung_id',$visitorId2)->avg('nilai');
+                    // dd($rata);
                     if(isset($data[$visitorId2][$bukuId1])&& isset($data[$visitorId2][$bukuId2])){
                         $result= $data[$visitorId2][$bukuId1] * $data[$visitorId2][$bukuId2];
                         $kuadratItemA = $data[$visitorId2][$bukuId1] * $data[$visitorId2][$bukuId1];

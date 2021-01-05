@@ -37,7 +37,7 @@
                         <div class="seo-fact sbg2">
                             <div class="p-4 d-flex justify-content-between align-items-center">
                                 <div class="seofct-icon"><i class="ti-user"></i> Pengunjung</div>
-                                <h2>{{$rating}}</h2>
+                                <h2>{{$visitor}}</h2>
                             </div>
                         </div>
                     </div>

@@ -32,15 +32,6 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="form-group">
-            {!! Form::label('deskripsi', 'Deskripsi Buku', ['class'=> 'form-label']) !!}
-            {!! Form::textarea('deskripsi', null, ['rows'=>'5','class'=> 'form-control', 'autofocus']) !!}
-            @if ($errors->has('deskripsi')) <p class="text-danger">{{ $errors->first('deskripsi') }} @endif
-        </div>
-    </div>
-</div>
 
 <div class="row mb-5">
     <div class="col-6">

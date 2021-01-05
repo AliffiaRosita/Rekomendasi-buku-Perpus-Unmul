@@ -16,7 +16,6 @@ class CreateBooksTable extends Migration
         Schema::create('buku', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('judul');
-            $table->longText('deskripsi')->nullable();
             $table->string('foto')->nullable();
             $table->string('penerbit');
             $table->string('isbn');

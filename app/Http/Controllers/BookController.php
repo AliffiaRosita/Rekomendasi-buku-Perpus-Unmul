@@ -24,7 +24,7 @@ class BookController extends Controller
         $query = $request->all();
     //    dd($query);
         if (count($query)==0) {
-            $books = Book::orderBy("id","desc")->paginate(50);
+            $books = Book::orderBy("id","asc")->paginate(50);
 
         }else{
             $books = Book::where($query['category'],'LIKE','%'.$query['keyword']."%")->paginate(30);
@@ -63,7 +63,6 @@ class BookController extends Controller
 
         Book::create([
             'judul'=> $buku['judul'],
-            'deskripsi'=> $buku['deskripsi'],
             'isbn'=>$buku['isbn'],
             'penerbit'=>$buku['penerbit'],
             'tempat_terbit'=> $buku['tempat_terbit'],
@@ -121,7 +120,6 @@ class BookController extends Controller
 
         $updateBook->update([
             'judul'=> $buku['judul'],
-            'deskripsi'=> $buku['deskripsi'],
             'isbn'=>$buku['isbn'],
             'tempat_terbit'=> $buku['tempat_terbit'],
             'penerbit'=>$buku['penerbit'],

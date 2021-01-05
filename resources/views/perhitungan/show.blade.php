@@ -6,7 +6,7 @@
         <div class="col-lg-12 mt-5">
             <div class="card p-3">
                 <div class="card-body"></div>
-                <h4 class="header-title">Bordered Table</h4>
+                <h4 class="header-title">Rating user</h4>
                 <div class="single-table">
                     <div class="table-responsive">
                         <table class="table table-bordered text-center">
@@ -14,23 +14,24 @@
                                 <tr>
                                     <th scope="col">User/Buku</th>
                                     @foreach ($books as $book)
-                                    <th scope="col">buku id-{{$book->id}}</th>
+                                <th scope="col" data-toggle="tooltip" data-placement="top" title="{{$book->buku->judul}}">buku id-{{$book->buku_id}}</th>
                                     @endforeach
 
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($visitors as $visitor)
-                                        <tr>
-                                            <th scope="row">{{$visitor->id}}</th>
-                                @for ($j = 1; $j < count($books); $j++) @if (isset($data[$visitor->id][$j]))
-                                    <td>{{$data[$visitor->id][$j]}}</td>
-                                    @else
-                                    <td></td>
-                                    @endif
-                                    @endfor
-                                    </tr>
+                                <tr>
+                                    <th scope="row" data-toggle="tooltip" data-placement="left" title="{{$visitor->visitor->nama_pengunjung}}">{{$visitor->pengunjung_id}}</th>
+                                    @foreach ($books as $book)
+                                    @if (isset($data[$visitor->pengunjung_id][$book->buku_id]))
+                                        <td>{{$data[$visitor->pengunjung_id][$book->buku_id]}}</td>
+                                        @else
+                                            <td></td>
+                                        @endif
                                     @endforeach
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -42,7 +43,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="">
-                            {{-- {{route('calc.predict')}} --}}
+                        {{-- {{route('calc.predict')}} --}}
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-6">
@@ -107,31 +108,34 @@
 
 @push('js')
 <script>
-$(function(e){
-   $('#btnSubmit').click(function (e) {
-       e.preventDefault();
-       $('#sim-table').html("");
-      const $visitorId= $('input[name="id"]').val();
-      const url = "{{route('calc.sim')}}";
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+    $(function (e) {
+        $('#btnSubmit').click(function (e) {
+            e.preventDefault();
+            $('#sim-table').html("");
+            const $visitorId = $('input[name="id"]').val();
+            const url = "{{route('calc.sim')}}";
 
-      $.ajax({
-            url: url,
-            method: 'GET',
-            data:{
-                id:$visitorId,
-            },
-            success: function(res){
+            $.ajax({
+                url: url,
+                method: 'GET',
+                data: {
+                    id: $visitorId,
+                },
+                success: function (res) {
 
-                console.log(res);
+                    console.log(res);
 
-                const countVisitor = res.visitorcount;
-                const countTable = res[0].length;
-                const respond = res[0];
-                for (let i = 0; i < countTable; i++) {
+                    const countVisitor = res.visitorcount;
+                    const countTable = res[0].length;
+                    const respond = res[0];
+                    for (let i = 0; i < countTable; i++) {
 
-                    // console.log(respond[i].bookid1);
+                        // console.log(respond[i].bookid1);
 
-                    $("#sim-table").append(`
+                        $("#sim-table").append(`
                     <div class="col-6">
                             <table class="table table-bordered text-center">
                                 <thead class="text-uppercase" >
@@ -151,48 +155,48 @@ $(function(e){
 
                     `);
 
-                //     res.forEach(function (item) {
-                //         $("#inside-table"+i).append(`
+                        //     res.forEach(function (item) {
+                        //         $("#inside-table"+i).append(`
 
 
-                //     `);
-                // });
-                const tbody = $('#inside-tr-'+i);
+                        //     `);
+                        // });
+                        const tbody = $('#inside-tr-' + i);
 
-                    for (let j = 0; j < countVisitor; j++) {
+                        for (let j = 0; j < countVisitor; j++) {
 
-                        if(typeof respond[i].other_visitor[j] !== "undefined"){
-                        const visitId= respond[i].other_visitor[j];
-                        // console.log(respond[i].other_visitor[]);
+                            if (typeof respond[i].other_visitor[j] !== "undefined") {
+                                const visitId = respond[i].other_visitor[j];
+                                // console.log(respond[i].other_visitor[]);
 
-                            tbody.append(`
+                                tbody.append(`
                             <tr>
                                 <td scope="row">${j}</td>
                                 <td>${visitId[0]}</td>
                                 <td>${visitId[1]}</td>
                             </tr>
                             `);
+                            }
                         }
                     }
-            }
 
-            },
-            error:function (xhr) {
-                console.log(xhr);
+                },
+                error: function (xhr) {
+                    console.log(xhr);
 
-            },
+                },
 
-        });
-        $("#tr-predict").html("");
-        const predictUrl = "{{route('calc.predict')}}";
-                $.ajax({
+            });
+            $("#tr-predict").html("");
+            const predictUrl = "{{route('calc.predict')}}";
+            $.ajax({
                 url: predictUrl,
                 method: 'GET',
-                data:{
-                    id:$visitorId,
+                data: {
+                    id: $visitorId,
                 },
-                success: function(ress){
-                    console.log(ress);
+                success: function (ress) {
+                    console.log(ress[0].buku_id);
 
                     const arrLength = ress.length;
                     for (let i = 0; i < arrLength; i++) {
@@ -206,14 +210,15 @@ $(function(e){
 
 
                     }
-                    
+
                 },
-                error:function (xhr) {
+                error: function (xhr) {
                     console.log(xhr);
                 },
             });
-   })
+        })
 
-});
+    });
+
 </script>
 @endpush

@@ -34,8 +34,8 @@ Route::group(['middleware' => ['role','auth']], function () {
     Route::get('dashboard/bukularis', 'DashboardController@bukuLaris')->name('dashboard.chart1');
     Route::get('dashboard/pengunjungBulanan', 'DashboardController@pengunjungBulanan')->name('dashboard.chart2');
 
+    Route::get('perhitungan/similarity','CalculationController@cosineSimilarity')->name('calc.sim');
+    Route::get('perhitungan/prediction','CalculationController@prediction')->name('calc.predict');
 
 });
-Route::get('perhitungan/similarity','CalculationController@cosineSimilarity')->name('calc.sim');
-Route::get('perhitungan/prediction','CalculationController@prediction')->name('calc.predict');
 

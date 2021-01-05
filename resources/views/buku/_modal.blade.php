@@ -10,7 +10,7 @@
                       </button>
               </div>
               <div class="modal-body">
-                <img src="{{asset("/image/buku/".$book->foto)}}"  class="img-thumbnail" alt="">
+                <img src="{{asset("/image/buku/".$book->foto)}}" width="200px"  class=" mr-auto ml-auto d-block img-thumbnail" alt="">
                 <div class="row mt-3">
                     <div class="col-4">
                         <h5>Penerbit</h5>
@@ -21,8 +21,6 @@
                             <p>{{$book->isbn}}</p>
                     </div>
                 </div>
-                <h5 class="mt-3">Deskripsi</h5>
-                <p>{{$book->deskripsi}}</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
