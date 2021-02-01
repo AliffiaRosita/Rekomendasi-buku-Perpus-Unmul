@@ -64,7 +64,7 @@
                         {!! Form::label('password', 'Password*', ['class'=> 'form-label']) !!}
                         {!! Form::password('password',['class'=> 'form-control', 'id'=>'password', 'autofocus']) !!}
                         <small >
-                            Password Minimal 8 karakter
+                            Password Minimal 6 karakter
                         </small>
                         @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }} @endif
                     </div>

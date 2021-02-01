@@ -53,7 +53,7 @@ class ApiBookController extends Controller
             "bookId"=> $books->id,
             "judul"=> $books->judul,
             "foto"=> $pict_url,
-            "average"=> isset($average[0])?$average[0]->rata:0,
+            "average"=> isset($average[0])?round($average[0]->rata,2):0,
             "penerbit"=> $books->penerbit ,
             'tempat_terbit'=> $books->tempat_terbit,
             "isbn"=> $books->isbn ,
@@ -157,7 +157,7 @@ class ApiBookController extends Controller
                 $data[]=[
                     'visitor_name'=> $item->visitor->nama_pengunjung,
                     'foto'=>$foto,
-                    'rating'=> $item->nilai,
+                    'rating'=> round($item->nilai,2),
                     'ulasan'=>$item->ulasan
                 ];
             }
@@ -187,7 +187,7 @@ class ApiBookController extends Controller
                 'id'=> $item->id,
                 'judul'=> $item->judul,
                 'foto'=> $foto,
-                'average'=> $item->rata
+                'average'=> round($item->rata,2)
             ];
 
         }

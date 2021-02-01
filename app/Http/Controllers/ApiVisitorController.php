@@ -57,11 +57,16 @@ class ApiVisitorController extends Controller
         try {
             DB::beginTransaction();
             $pengunjung = $request->all();
-            $validator = Validator::make($pengunjung, [
+            $validators =Validator::make($pengunjung, [
                 'nim' => 'sometimes|unique:pengunjung,nim,',
-            ])->validate();
-            // dd($validator);
+            ]);
 
+            if($validators->fails()){
+                return response()->json(
+                    $validators->messages(), 400
+                );
+
+            }else{
             $pass = Hash::make($pengunjung['password']);
             User::create([
                 'email'=>null,
@@ -84,6 +89,7 @@ class ApiVisitorController extends Controller
                     'message'=>'berhasil membuat user',
                 ],200);
             // }
+            }
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;

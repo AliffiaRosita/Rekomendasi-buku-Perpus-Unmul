@@ -40,7 +40,7 @@ class VisitorRequest extends FormRequest
                 'fakultas'=>'required',
                 'angkatan' => 'required | numeric',
                 'email'=>'sometimes|email|required| unique:users',
-                'password'=>'required| min:8',
+                'password'=>'required| min:6',
                 'foto_profil' =>'mimes:JPG,JPEG,PNG,jpg,jpeg,png|max:3000',
             ];
         // }

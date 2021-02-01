@@ -1,46 +1,34 @@
 <?php
 
+use Flynsarmy\CsvSeeder\CsvSeeder;
 use Illuminate\Database\Seeder;
 
-class UserTableSeeder extends Seeder
+class UserTableSeeder extends CsvSeeder
 {
     /**
      * Run the database seeds.
      *
      * @return void
      */
+    public function __construct()
+     {
+         $this->table = 'users';
+         $this->filename = base_path().'/database/seeds/user_seeder.csv';
+     }
     public function run()
     {
-        $data = [
-            [
-            'email'  =>  str_random(10) . '@email.com',
-            'password' => bcrypt('123123'),
-            'role'=>'mahasiswa'
-        ]];
-    //     [
-    //         'email'  =>  str_random(10) . '@email.com',
-    //         'password' => bcrypt('123123'),
-    //         'role'=>'mahasiswa'
-    //     ],
-    //     [
-    //         'email'  =>  str_random(10) . '@email.com',
-    //         'password' => bcrypt('123123'),
-    //         'role'=>'mahasiswa'
-    //     ],[
-    //         'email'  =>  str_random(10) . '@email.com',
-    //         'password' => bcrypt('123123'),
-    //         'role'=>'mahasiswa'
-    //     ],
-    //     [
-    //         'email'  =>  str_random(10) . '@email.com',
-    //         'password' => bcrypt('123123'),
-    //         'role'=>'mahasiswa'
-    //     ]
-    // ];
 
-    foreach ($data as $item) {
-        \App\User::create($item);
-    }
+        DB::disableQueryLog(); //jk besar pastikan pakai diSableQueryLog
+        // DB::table($this->table)->truncate();
+        parent::run();
+
+        $this->command->getOutput()->progressStart(10);
+        for ($i = 0; $i < 10; $i++) {
+            sleep(1);
+            $this->command->getOutput()->progressAdvance();
+        }
+        $this->command->getOutput()->progressFinish();
+
 }
 
 }

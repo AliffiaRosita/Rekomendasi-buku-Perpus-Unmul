@@ -27,7 +27,12 @@ class BookController extends Controller
             $books = Book::orderBy("id","asc")->paginate(50);
 
         }else{
-            $books = Book::where($query['category'],'LIKE','%'.$query['keyword']."%")->paginate(30);
+            if ($query['page']) {
+            $books = Book::orderBy("id","asc")->paginate(50);
+
+            }else{
+                $books = Book::where($query['category'],'LIKE','%'.$query['keyword']."%")->paginate(30);
+            }
 
         }
             return view('buku.index',[

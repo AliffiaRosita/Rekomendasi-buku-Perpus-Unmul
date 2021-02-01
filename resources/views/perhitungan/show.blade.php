@@ -14,7 +14,7 @@
                                 <tr>
                                     <th scope="col">User/Buku</th>
                                     @foreach ($books as $book)
-                                <th scope="col" data-toggle="tooltip" data-placement="top" title="{{$book->buku->judul}}">buku id-{{$book->buku_id}}</th>
+                                <th scope="col" data-toggle="tooltip" data-placement="top" title="{{$book->buku->judul}}">{{$book->buku_id}}</th>
                                     @endforeach
 
                                 </tr>
@@ -196,7 +196,7 @@
                     id: $visitorId,
                 },
                 success: function (ress) {
-                    console.log(ress[0].buku_id);
+                    // console.log(ress);
 
                     const arrLength = ress.length;
                     for (let i = 0; i < arrLength; i++) {

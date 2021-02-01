@@ -25,27 +25,33 @@ class VisitorController extends Controller
         $query = $request->all();
         $visitors =[];
         if (count($query)==0) {
+
             $visitors = Visitor::join('users', function ($join) {
                 $join->on('users.id', '=', 'pengunjung.user_id')
                      ->where('users.role', '=', 'mahasiswa');
-            })->orderBy('nama_pengunjung','asc')->paginate(50);
-
+            })->paginate(50);
+            // $visitors = Visitor::all()->orderBy('nama_pengunjung','ASC')->paginate(50);
+            // dd($visitors);
         }else{
-            if (isset($query['fakultas'])) {
+            if (isset($query['page'])) {
+                $visitors = Visitor::join('users', function ($join) {
+                    $join->on('users.id', '=', 'pengunjung.user_id')
+                         ->where('users.role', '=', 'mahasiswa');
+                })->paginate(50);
+            }else{
+                if(!isset($query['fakultas'])){
+                    $faculty = '';
+                }else{
+                    $faculty=$query['fakultas'];
+                }
                 $visitors = Visitor::join('users', function ($join) {
                     $join->on('users.id', '=', 'pengunjung.user_id')
                          ->where('users.role', '=', 'mahasiswa');
                 })
                     ->where($query['category'],'LIKE','%'.$query['keyword'].'%')
-                    ->where('fakultas','LIKE','%'.$query['fakultas'].'%')
+                    ->where('fakultas','LIKE','%'.$faculty.'%')
                     ->orderBy('nim','ASC')->paginate(30);
-            }else{
-                 $visitors = Visitor::join('users', function ($join) {
-                    $join->on('users.id', '=', 'pengunjung.user_id')
-                         ->where('users.role', '=', 'mahasiswa');
-                })
-                 ->where($query['category'],'LIKE','%'.$query['keyword'].'%')
-                 ->orderBy('nim','ASC')->paginate(30);
+                //  ->orderBy('created_at','asc')->paginate(30);
             }
 
         }

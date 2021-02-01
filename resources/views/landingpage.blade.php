@@ -60,7 +60,7 @@
                 <div class="col-12 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="header-title">User Statistics</h4>
+                            <h4 class="header-title">Statistik Pengunjung</h4>
                             <div id="user-statistics"></div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
         <div class="col-4 mt-5">
                 <div class="card">
                     <div class="card-body pb-0">
-                        <h4 class="header-title">Rating Terbanyak</h4>
+                        <h4 class="header-title">Buku Populer</h4>
                         <div id="socialads" style="height: 245px;"></div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@ if ($('#user-statistics').length) {
                     "type": "serial",
                     "theme": "light",
                     "marginRight": 0,
-                    "marginLeft": 40,
+                    "marginLeft": 60,
                     "autoMarginOffset": 20,
                     "dataDateFormat": "YYYY-MM-DD",
                     "valueAxes": [{
